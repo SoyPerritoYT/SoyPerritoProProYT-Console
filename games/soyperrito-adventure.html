@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoyPerrito Adventure</title>
+
+<style>
+body {
+  margin: 0;
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+h1 {
+  margin: 12px;
+}
+
+#score {
+  font-size: 22px;
+  margin: 8px;
+}
+
+#game {
+  position: relative;
+  width: 100vw;
+  height: 65vh;
+  background: #222;
+  overflow: hidden;
+  border-top: 2px solid #444;
+  border-bottom: 2px solid #444;
+}
+
+#player {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  left: 50px;
+  bottom: 40px;
+  font-size: 35px;
+  line-height: 45px;
+}
+
+.coin {
+  position: absolute;
+  font-size: 30px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.controls button {
+  width: 70px;
+  height: 55px;
+  font-size: 25px;
+  border: 0;
+  border-radius: 12px;
+  background: #333;
+  color: white;
+}
+
+#back {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 10px;
+}
+
+#controllerStatus {
+  font-size: 14px;
+  margin: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐶 SoyPerrito Adventure</h1>
+
+<div id="score">⭐ Puntos: 0</div>
+<div id="controllerStatus">🎮 Mando: buscando...</div>
+
+<div id="game">
+  <div id="player">🐶</div>
+</div>
+
+<div class="controls">
+  <button onclick="move(-1)">⬅️</button>
+  <button onclick="jump()">⬆️</button>
+  <button onclick="move(1)">➡️</button>
+</div>
+
+<button id="back" onclick="history.back()">⬅️ Volver</button>
+
+<script>
+const player = document.getElementById("player");
+const game = document.getElementById("game");
+const scoreText = document.getElementById("score");
+const controllerStatus =
+  document.getElementById("controllerStatus");
+
+let x = 50;
+let score = 0;
+let jumping = false;
+
+function move(direction) {
+  x += direction * 30;
+
+  if (x < 0) {
+    x = 0;
+  }
+
+  if (x > game.clientWidth - 45) {
+    x = game.clientWidth - 45;
+  }
+
+  player.style.left = x + "px";
+}
+
+function jump() {
+  if (jumping) return;
+
+  jumping = true;
+
+  let height = 0;
+
+  const up = setInterval(() => {
+    height += 8;
+    player.style.bottom =
+      (40 + height) + "px";
+
+    if (height >= 120) {
+      clearInterval(up);
+
+      const down = setInterval(() => {
+        height -= 8;
+
+        player.style.bottom =
+          (40 + height) + "px";
+
+        if (height <= 0) {
+          clearInterval(down);
+          jumping = false;
+        }
+      }, 20);
+    }
+  }, 20);
+}
+
+function createCoin() {
+  const coin = document.createElement("div");
+
+  coin.className = "coin";
+  coin.textContent = "⭐";
+
+  coin.style.left =
+    Math.random() *
+    (game.clientWidth - 40) + "px";
+
+  coin.style.bottom =
+    (50 + Math.random() * 200) + "px";
+
+  game.appendChild(coin);
+
+  const check = setInterval(() => {
+    const a = player.getBoundingClientRect();
+    const b = coin.getBoundingClientRect();
+
+    if (
+      a.left < b.right &&
+      a.right > b.left &&
+      a.top < b.bottom &&
+      a.bottom > b.top
+    ) {
+      score++;
+
+      scoreText.textContent =
+        "⭐ Puntos: " + score;
+
+      coin.remove();
+      clearInterval(check);
+    }
+  }, 50);
+
+  setTimeout(() => {
+    if (coin.isConnected) {
+      coin.remove();
+      clearInterval(check);
+    }
+  }, 8000);
+}
+
+setInterval(createCoin, 1500);
+
+
+/* =========================
+   TECLADO
+========================= */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "ArrowLeft") {
+    move(-1);
+  }
+
+  if (event.key === "ArrowRight") {
+    move(1);
+  }
+
+  if (
+    event.key === "ArrowUp" ||
+    event.key === " "
+  ) {
+    jump();
+  }
+
+});
+
+
+/* =========================
+   MANDO
+========================= */
+
+let controllerConnected = false;
+
+window.addEventListener("gamepadconnected", event => {
+
+  controllerConnected = true;
+
+  controllerStatus.textContent =
+    "🎮 Mando conectado: " +
+    event.gamepad.id;
+
+  requestAnimationFrame(readController);
+});
+
+
+window.addEventListener("gamepaddisconnected", () => {
+
+  controllerConnected = false;
+
+  controllerStatus.textContent =
+    "🎮 Mando desconectado";
+});
+
+
+function readController() {
+
+  const gamepads = navigator.getGamepads();
+
+  const pad = gamepads[0];
+
+  if (pad) {
+
+    /* Joystick izquierdo */
+
+    const horizontal =
+      pad.axes[0];
+
+    if (horizontal < -0.5) {
+      move(-1);
+    }
+
+    if (horizontal > 0.5) {
+      move(1);
+    }
+
+
+    /* Cruceta */
+
+    if (pad.buttons[14]?.pressed) {
+      move(-1);
+    }
+
+    if (pad.buttons[15]?.pressed) {
+      move(1);
+    }
+
+
+    /* A / Cross */
+
+    if (pad.buttons[0]?.pressed) {
+      jump();
+    }
+  }
+
+  requestAnimationFrame(readController);
+}
+
+
+/* Algunos navegadores requieren
+   una interacción para detectar
+   el mando */
+
+document.addEventListener("click", () => {
+
+  const gamepads =
+    navigator.getGamepads();
+
+  if (gamepads[0]) {
+
+    controllerStatus.textContent =
+      "🎮 Mando conectado";
+
+    requestAnimationFrame(readController);
+  }
+
+}, { once: true });
+
+</script>
+
+</body>
+  </html>
