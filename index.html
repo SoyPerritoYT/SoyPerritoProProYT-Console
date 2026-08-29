@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoyPerritoProProYT-Console</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #080808;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+}
+
+.screen {
+  min-height: 100vh;
+  display: none;
+  padding: 25px;
+}
+
+.active {
+  display: block;
+}
+
+/* ENCENDIDO */
+#power {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+#power h1 {
+  font-size: clamp(28px, 7vw, 65px);
+}
+
+.powerButton {
+  background: #20d866;
+  color: white;
+  font-size: 22px;
+  padding: 18px 35px;
+}
+
+/* HOME */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.menu {
+  max-width: 900px;
+  margin: 45px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+}
+
+.menu button {
+  min-height: 120px;
+  background: #202020;
+  color: white;
+  font-size: 18px;
+}
+
+.menu button:hover {
+  background: #303030;
+}
+
+/* PANELES */
+.panel {
+  max-width: 900px;
+  margin: 25px auto;
+  background: #151515;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 0;
+  margin: 10px 0;
+}
+
+.game {
+  background: #252525;
+  padding: 18px;
+  border-radius: 14px;
+  margin: 12px 0;
+}
+
+.game button {
+  background: #20d866;
+  color: white;
+  margin-top: 8px;
+}
+
+.back {
+  background: #444;
+  color: white;
+  margin-top: 20px;
+}
+
+.infoBox {
+  background: #252525;
+  padding: 18px;
+  border-radius: 14px;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENCENDIDO -->
+<section id="power" class="screen active">
+  <h1>🐶 SoyPerritoProProYT-Console</h1>
+  <button class="powerButton" onclick="startConsole()">⚡ ENCENDER</button>
+</section>
+
+<!-- CONSOLA -->
+<section id="console" class="screen">
+
+<header>
+  <h1>🐶 SoyPerritoProProYT-Console</h1>
+  <button onclick="showHome()">🏠 Home</button>
+</header>
+
+<div class="menu">
+  <button onclick="openPanel('shop')">🛒<br>SHOP</button>
+  <button onclick="openPanel('games')">🎮<br>Mis juegos</button>
+  <button onclick="openPanel('profile')">👤<br>Perfil</button>
+  <button onclick="openPanel('account')">🔐<br>Cuenta</button>
+  <button onclick="openPanel('settings')">⚙️<br>Ajustes</button>
+</div>
+
+<!-- SHOP -->
+<div id="shop" class="panel" style="display:none">
+  <h2>🛒 SoyPerritoProProYT-SHOP</h2>
+
+  <input
+    id="search"
+    type="text"
+    placeholder="🔎 Buscar juegos..."
+    oninput="searchGames()"
+  >
+
+  <h3>🆓 Catálogo Gratis</h3>
+
+  <div id="gameList"></div>
+
+  <button class="back" onclick="showHome()">🏠 Home</button>
+</div>
+
+<!-- MIS JUEGOS -->
+<div id="games" class="panel" style="display:none">
+  <h2>🎮 Mis juegos</h2>
+  <div id="myGames">
+    <p>Todavía no tienes juegos descargados.</p>
+  </div>
+
+  <button class="back" onclick="showHome()">🏠 Home</button>
+</div>
+
+<!-- PERFIL -->
+<div id="profile" class="panel" style="display:none">
+  <h2>👤 Crear perfil</h2>
+
+  <input id="profileName" placeholder="Escribe tu nombre">
+
+  <button onclick="saveProfile()">💾 Guardar nombre</button>
+
+  <div class="infoBox">
+    Nombre actual:
+    <strong id="currentName">Sin nombre</strong>
+  </div>
+
+  <button class="back" onclick="showHome()">🏠 Home</button>
+</div>
+
+<!-- CUENTA -->
+<div id="account" class="panel" style="display:none">
+  <h2>🔐 Cuenta</h2>
+
+  <p>Esta primera versión guarda los datos en este dispositivo.</p>
+
+  <input placeholder="Nombre de usuario">
+  <input type="password" placeholder="Contraseña">
+
+  <button onclick="alert('Cuenta de prueba creada en este dispositivo.')">
+    📝 Crear cuenta
+  </button>
+
+  <button onclick="alert('Inicio de sesión de prueba.')">
+    🔑 Iniciar sesión
+  </button>
+
+  <button class="back" onclick="showHome()">🏠 Home</button>
+</div>
+
+<!-- AJUSTES -->
+<div id="settings" class="panel" style="display:none">
+  <h2>⚙️ Ajustes</h2>
+
+  <p>🎮 Mando: compatible</p>
+  <p>⌨️ Teclado: compatible</p>
+  <p>🖱️ Ratón: compatible</p>
+  <p>📱 Pantalla táctil: compatible</p>
+
+  <button onclick="openPanel('info')">
+    ℹ️ Información de la consola
+  </button>
+
+  <button class="back" onclick="showHome()">🏠 Home</button>
+</div>
+
+<!-- INFORMACIÓN -->
+<div id="info" class="panel" style="display:none">
+  <h2>ℹ️ Información de la consola</h2>
+
+  <div class="infoBox">
+    <p><strong>Nombre:</strong></p>
+
+    <input
+      id="consoleOwner"
+      placeholder="Nombre de la persona"
+    >
+
+    <button onclick="saveOwner()">
+      💾 Guardar
+    </button>
+
+    <h3 id="consoleTitle">
+      SoyPerritoProProYT-Console
+    </h3>
+  </div>
+
+  <p>🐶 Creada por SoyPerritoProProYT</p>
+  <p>🎮 Versión 1.0</p>
+
+  <button class="back" onclick="openPanel('settings')">
+    ⬅️ Volver a Ajustes
+  </button>
+</div>
+
+</section>
+
+<script>
+
+/* JUEGOS DE PRUEBA */
+const games = [
+  {
+    name: "🐶 SoyPerrito Adventure",
+    description: "Juego creado para SoyPerritoProProYT-Console."
+  },
+  {
+    name: "🎮 Perrito Racing",
+    description: "Corre y consigue el mejor tiempo."
+  },
+  {
+    name: "🧱 Perrito Blocks",
+    description: "Construye tu propio mundo."
+  }
+];
+
+let myGames =
+  JSON.parse(localStorage.getItem("myGames")) || [];
+
+function startConsole() {
+  document.getElementById("power").classList.remove("active");
+  document.getElementById("console").classList.add("active");
+  loadGames();
+  loadProfile();
+  loadOwner();
+}
+
+function showHome() {
+  document.querySelectorAll(".panel").forEach(panel => {
+    panel.style.display = "none";
+  });
+}
+
+function openPanel(id) {
+  document.querySelectorAll(".panel").forEach(panel => {
+    panel.style.display = "none";
+  });
+
+  document.getElementById(id).style.display = "block";
+
+  if (id === "shop") {
+    loadGames();
+  }
+}
+
+function loadGames() {
+  const list = document.getElementById("gameList");
+  list.innerHTML = "";
+
+  games.forEach((game, index) => {
+    list.innerHTML += `
+      <div class="game">
+        <h3>${game.name}</h3>
+        <p>${game.description}</p>
+        <button onclick="downloadGame(${index})">
+          📥 Descargar
+        </button>
+      </div>
+    `;
+  });
+}
+
+function downloadGame(index) {
+  const game = games[index];
+
+  if (!myGames.includes(game.name)) {
+    myGames.push(game.name);
+
+    localStorage.setItem(
+      "myGames",
+      JSON.stringify(myGames)
+    );
+  }
+
+  alert(game.name + " añadido a Mis juegos 🎮");
+
+  loadMyGames();
+}
+
+function loadMyGames() {
+  const box = document.getElementById("myGames");
+
+  if (myGames.length === 0) {
+    box.innerHTML =
+      "<p>Todavía no tienes juegos descargados.</p>";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  myGames.forEach(game => {
+    box.innerHTML += `
+      <div class="game">
+        <h3>${game}</h3>
+        <button onclick="openGame('${game}')">
+          ▶️ Abrir
+        </button>
+      </div>
+    `;
+  });
+}
+
+function openGame(name) {
+  alert(
+    "Aquí se abrirá el juego: " +
+    name +
+    " 🎮"
+  );
+}
+
+function searchGames() {
+  const text =
+    document.getElementById("search").value.toLowerCase();
+
+  const list = document.getElementById("gameList");
+
+  list.innerHTML = "";
+
+  games
+    .filter(game =>
+      game.name.toLowerCase().includes(text)
+    )
+    .forEach((game, index) => {
+
+      list.innerHTML += `
+        <div class="game">
+          <h3>${game.name}</h3>
+          <p>${game.description}</p>
+
+          <button onclick="downloadGame(${index})">
+            📥 Descargar
+          </button>
+        </div>
+      `;
+    });
+}
+
+function saveProfile() {
+  const name =
+    document.getElementById("profileName").value;
+
+  localStorage.setItem("profileName", name);
+
+  document.getElementById("currentName").textContent =
+    name || "Sin nombre";
+}
+
+function loadProfile() {
+  const name =
+    localStorage.getItem("profileName");
+
+  if (name) {
+    document.getElementById("currentName").textContent =
+      name;
+  }
+
+  loadMyGames();
+}
+
+function saveOwner() {
+  const name =
+    document.getElementById("consoleOwner").value;
+
+  localStorage.setItem("consoleOwner", name);
+
+  document.getElementById("consoleTitle").textContent =
+    "SoyPerritoProProYT-Console de " +
+    (name || "________");
+}
+
+function loadOwner() {
+  const name =
+    localStorage.getItem("consoleOwner");
+
+  if (name) {
+    document.getElementById("consoleTitle").textContent =
+      "SoyPerritoProProYT-Console de " + name;
+  }
+}
+
+</script>
+
+</body>
+  </html>
