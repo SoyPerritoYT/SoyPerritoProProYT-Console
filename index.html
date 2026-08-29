@@ -137,35 +137,98 @@ input {
   border-radius: 14px;
   margin-top: 15px;
 }
+
+.shopTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.shopTabs button {
+  background: #333;
+  color: white;
+}
+
+.shopTabs button:hover {
+  background: #444;
+}
+
+.small {
+  opacity: 0.75;
+  font-size: 14px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ENCENDIDO -->
+<!-- =========================
+     PANTALLA DE ENCENDIDO
+========================= -->
+
 <section id="power" class="screen active">
   <h1>🐶 SoyPerritoProProYT-Console</h1>
-  <button class="powerButton" onclick="startConsole()">⚡ ENCENDER</button>
+
+  <button class="powerButton" onclick="startConsole()">
+    ⚡ ENCENDER
+  </button>
 </section>
 
-<!-- CONSOLA -->
+
+<!-- =========================
+     CONSOLA
+========================= -->
+
 <section id="console" class="screen">
 
 <header>
   <h1>🐶 SoyPerritoProProYT-Console</h1>
-  <button onclick="showHome()">🏠 Home</button>
+
+  <button onclick="showHome()">
+    🏠 Home
+  </button>
 </header>
 
+
+<!-- MENÚ PRINCIPAL -->
+
 <div class="menu">
-  <button onclick="openPanel('shop')">🛒<br>SHOP</button>
-  <button onclick="openPanel('games')">🎮<br>Mis juegos</button>
-  <button onclick="openPanel('profile')">👤<br>Perfil</button>
-  <button onclick="openPanel('account')">🔐<br>Cuenta</button>
-  <button onclick="openPanel('settings')">⚙️<br>Ajustes</button>
+
+  <button onclick="openPanel('shop')">
+    🛒<br>
+    SHOP
+  </button>
+
+  <button onclick="openPanel('games')">
+    🎮<br>
+    Mis juegos
+  </button>
+
+  <button onclick="openPanel('profile')">
+    👤<br>
+    Perfil
+  </button>
+
+  <button onclick="openPanel('account')">
+    🔐<br>
+    Cuenta
+  </button>
+
+  <button onclick="openPanel('settings')">
+    ⚙️<br>
+    Ajustes
+  </button>
+
 </div>
 
-<!-- SHOP -->
+
+<!-- =========================
+     SHOP
+========================= -->
+
 <div id="shop" class="panel" style="display:none">
+
   <h2>🛒 SoyPerritoProProYT-SHOP</h2>
 
   <input
@@ -175,61 +238,130 @@ input {
     oninput="searchGames()"
   >
 
-  <h3>🆓 Catálogo Gratis</h3>
+  <div class="shopTabs">
+
+    <button onclick="showAllGames()">
+      🎮 Todos
+    </button>
+
+    <button onclick="showFreeGames()">
+      🆓 Gratis
+    </button>
+
+  </div>
 
   <div id="gameList"></div>
 
-  <button class="back" onclick="showHome()">🏠 Home</button>
+  <button class="back" onclick="showHome()">
+    🏠 Home
+  </button>
+
 </div>
 
-<!-- MIS JUEGOS -->
+
+<!-- =========================
+     MIS JUEGOS
+========================= -->
+
 <div id="games" class="panel" style="display:none">
+
   <h2>🎮 Mis juegos</h2>
+
   <div id="myGames">
     <p>Todavía no tienes juegos descargados.</p>
   </div>
 
-  <button class="back" onclick="showHome()">🏠 Home</button>
+  <button class="back" onclick="showHome()">
+    🏠 Home
+  </button>
+
 </div>
 
-<!-- PERFIL -->
+
+<!-- =========================
+     PERFIL
+========================= -->
+
 <div id="profile" class="panel" style="display:none">
+
   <h2>👤 Crear perfil</h2>
 
-  <input id="profileName" placeholder="Escribe tu nombre">
+  <input
+    id="profileName"
+    placeholder="Escribe tu nombre"
+  >
 
-  <button onclick="saveProfile()">💾 Guardar nombre</button>
+  <button onclick="saveProfile()">
+    💾 Guardar nombre
+  </button>
 
   <div class="infoBox">
+
     Nombre actual:
-    <strong id="currentName">Sin nombre</strong>
+    <strong id="currentName">
+      Sin nombre
+    </strong>
+
   </div>
 
-  <button class="back" onclick="showHome()">🏠 Home</button>
+  <button class="back" onclick="showHome()">
+    🏠 Home
+  </button>
+
 </div>
 
-<!-- CUENTA -->
+
+<!-- =========================
+     CUENTA
+========================= -->
+
 <div id="account" class="panel" style="display:none">
+
   <h2>🔐 Cuenta</h2>
 
-  <p>Esta primera versión guarda los datos en este dispositivo.</p>
+  <p>
+    Esta versión guarda los datos
+    en este dispositivo.
+  </p>
 
-  <input placeholder="Nombre de usuario">
-  <input type="password" placeholder="Contraseña">
+  <input
+    id="username"
+    placeholder="Nombre de usuario"
+  >
 
-  <button onclick="alert('Cuenta de prueba creada en este dispositivo.')">
+  <input
+    id="password"
+    type="password"
+    placeholder="Contraseña"
+  >
+
+  <button onclick="createAccount()">
     📝 Crear cuenta
   </button>
 
-  <button onclick="alert('Inicio de sesión de prueba.')">
+  <button onclick="login()">
     🔑 Iniciar sesión
   </button>
 
-  <button class="back" onclick="showHome()">🏠 Home</button>
+  <div class="infoBox">
+    <strong id="accountStatus">
+      No has iniciado sesión.
+    </strong>
+  </div>
+
+  <button class="back" onclick="showHome()">
+    🏠 Home
+  </button>
+
 </div>
 
-<!-- AJUSTES -->
+
+<!-- =========================
+     AJUSTES
+========================= -->
+
 <div id="settings" class="panel" style="display:none">
+
   <h2>⚙️ Ajustes</h2>
 
   <p>🎮 Mando: compatible</p>
@@ -241,15 +373,26 @@ input {
     ℹ️ Información de la consola
   </button>
 
-  <button class="back" onclick="showHome()">🏠 Home</button>
+  <button class="back" onclick="showHome()">
+    🏠 Home
+  </button>
+
 </div>
 
-<!-- INFORMACIÓN -->
+
+<!-- =========================
+     INFORMACIÓN
+========================= -->
+
 <div id="info" class="panel" style="display:none">
+
   <h2>ℹ️ Información de la consola</h2>
 
   <div class="infoBox">
-    <p><strong>Nombre:</strong></p>
+
+    <p>
+      <strong>Nombre de la consola:</strong>
+    </p>
 
     <input
       id="consoleOwner"
@@ -263,198 +406,581 @@ input {
     <h3 id="consoleTitle">
       SoyPerritoProProYT-Console
     </h3>
+
   </div>
 
   <p>🐶 Creada por SoyPerritoProProYT</p>
   <p>🎮 Versión 1.0</p>
 
-  <button class="back" onclick="openPanel('settings')">
+  <button
+    class="back"
+    onclick="openPanel('settings')"
+  >
     ⬅️ Volver a Ajustes
   </button>
+
 </div>
 
 </section>
 
+
 <script>
 
-/* JUEGOS DE PRUEBA */
+/* =========================
+   DATOS DE LOS JUEGOS
+========================= */
+
 const games = [
+
   {
+    id: "soyperrito-adventure",
     name: "🐶 SoyPerrito Adventure",
-    description: "Juego creado para SoyPerritoProProYT-Console."
+    description:
+      "Juego creado para SoyPerritoProProYT-Console.",
+    free: true,
+    file:
+      "games/soyperrito-adventure.html"
   },
+
   {
-    name: "🎮 Perrito Racing",
-    description: "Corre y consigue el mejor tiempo."
+    id: "perrito-racing",
+    name: "🏎️ Perrito Racing",
+    description:
+      "Próximamente.",
+    free: true,
+    file: null
   },
+
   {
+    id: "perrito-blocks",
     name: "🧱 Perrito Blocks",
-    description: "Construye tu propio mundo."
+    description:
+      "Próximamente.",
+    free: true,
+    file: null
   }
+
 ];
 
+
 let myGames =
-  JSON.parse(localStorage.getItem("myGames")) || [];
+  JSON.parse(
+    localStorage.getItem("myGames")
+  ) || [];
+
+
+/* =========================
+   ENCENDER
+========================= */
 
 function startConsole() {
-  document.getElementById("power").classList.remove("active");
-  document.getElementById("console").classList.add("active");
+
+  document
+    .getElementById("power")
+    .classList.remove("active");
+
+  document
+    .getElementById("console")
+    .classList.add("active");
+
   loadGames();
+  loadMyGames();
   loadProfile();
   loadOwner();
+  loadAccount();
+
 }
+
+
+/* =========================
+   HOME
+========================= */
 
 function showHome() {
-  document.querySelectorAll(".panel").forEach(panel => {
-    panel.style.display = "none";
-  });
+
+  document
+    .querySelectorAll(".panel")
+    .forEach(panel => {
+      panel.style.display = "none";
+    });
+
 }
 
-function openPanel(id) {
-  document.querySelectorAll(".panel").forEach(panel => {
-    panel.style.display = "none";
-  });
 
-  document.getElementById(id).style.display = "block";
+/* =========================
+   ABRIR PANEL
+========================= */
+
+function openPanel(id) {
+
+  document
+    .querySelectorAll(".panel")
+    .forEach(panel => {
+      panel.style.display = "none";
+    });
+
+  document
+    .getElementById(id)
+    .style.display = "block";
 
   if (id === "shop") {
     loadGames();
   }
+
+  if (id === "games") {
+    loadMyGames();
+  }
+
 }
+
+
+/* =========================
+   MOSTRAR JUEGOS
+========================= */
+
+function renderGames(list) {
+
+  const gameList =
+    document.getElementById("gameList");
+
+  gameList.innerHTML = "";
+
+  if (list.length === 0) {
+
+    gameList.innerHTML =
+      "<p>😢 No se encontraron juegos.</p>";
+
+    return;
+  }
+
+
+  list.forEach(game => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "game";
+
+    div.innerHTML = `
+
+      <h3>${game.name}</h3>
+
+      <p>${game.description}</p>
+
+      <p class="small">
+        ${game.free ? "🆓 Gratis" : "💰 De pago"}
+      </p>
+
+      <button>
+        📥 Descargar
+      </button>
+
+    `;
+
+    div
+      .querySelector("button")
+      .onclick = () =>
+        downloadGame(game.id);
+
+    gameList.appendChild(div);
+
+  });
+
+}
+
 
 function loadGames() {
-  const list = document.getElementById("gameList");
-  list.innerHTML = "";
 
-  games.forEach((game, index) => {
-    list.innerHTML += `
-      <div class="game">
-        <h3>${game.name}</h3>
-        <p>${game.description}</p>
-        <button onclick="downloadGame(${index})">
-          📥 Descargar
-        </button>
-      </div>
-    `;
-  });
+  renderGames(games);
+
 }
 
-function downloadGame(index) {
-  const game = games[index];
 
-  if (!myGames.includes(game.name)) {
-    myGames.push(game.name);
+function showAllGames() {
+
+  document.getElementById("search").value = "";
+
+  renderGames(games);
+
+}
+
+
+function showFreeGames() {
+
+  document.getElementById("search").value = "";
+
+  renderGames(
+    games.filter(game => game.free)
+  );
+
+}
+
+
+/* =========================
+   BUSCAR
+========================= */
+
+function searchGames() {
+
+  const text =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const results =
+    games.filter(game =>
+      game.name
+        .toLowerCase()
+        .includes(text)
+    );
+
+  renderGames(results);
+
+}
+
+
+/* =========================
+   DESCARGAR
+========================= */
+
+function downloadGame(id) {
+
+  const game =
+    games.find(item => item.id === id);
+
+  if (!game) return;
+
+
+  if (!myGames.includes(game.id)) {
+
+    myGames.push(game.id);
 
     localStorage.setItem(
       "myGames",
       JSON.stringify(myGames)
     );
+
   }
 
-  alert(game.name + " añadido a Mis juegos 🎮");
+
+  alert(
+    game.name +
+    " añadido a Mis juegos 🎮"
+  );
 
   loadMyGames();
+
 }
 
+
+/* =========================
+   MIS JUEGOS
+========================= */
+
 function loadMyGames() {
-  const box = document.getElementById("myGames");
+
+  const box =
+    document.getElementById("myGames");
 
   if (myGames.length === 0) {
+
     box.innerHTML =
       "<p>Todavía no tienes juegos descargados.</p>";
+
     return;
   }
 
+
   box.innerHTML = "";
 
-  myGames.forEach(game => {
-    box.innerHTML += `
-      <div class="game">
-        <h3>${game}</h3>
-        <button onclick="openGame('${game}')">
-          ▶️ Abrir
-        </button>
-      </div>
+
+  myGames.forEach(id => {
+
+    const game =
+      games.find(item => item.id === id);
+
+    if (!game) return;
+
+
+    const div =
+      document.createElement("div");
+
+    div.className = "game";
+
+
+    div.innerHTML = `
+
+      <h3>${game.name}</h3>
+
+      <button>
+        ▶️ Abrir
+      </button>
+
     `;
+
+
+    div
+      .querySelector("button")
+      .onclick = () =>
+        openGame(game);
+
+
+    box.appendChild(div);
+
   });
+
 }
 
-function openGame(name) {
-  alert(
-    "Aquí se abrirá el juego: " +
-    name +
-    " 🎮"
-  );
+
+/* =========================
+   ABRIR JUEGO REAL
+========================= */
+
+function openGame(game) {
+
+  if (game.file) {
+
+    window.location.href =
+      game.file;
+
+  } else {
+
+    alert(
+      "Este juego todavía está en desarrollo 🐶🎮"
+    );
+
+  }
+
 }
 
-function searchGames() {
-  const text =
-    document.getElementById("search").value.toLowerCase();
 
-  const list = document.getElementById("gameList");
-
-  list.innerHTML = "";
-
-  games
-    .filter(game =>
-      game.name.toLowerCase().includes(text)
-    )
-    .forEach((game, index) => {
-
-      list.innerHTML += `
-        <div class="game">
-          <h3>${game.name}</h3>
-          <p>${game.description}</p>
-
-          <button onclick="downloadGame(${index})">
-            📥 Descargar
-          </button>
-        </div>
-      `;
-    });
-}
+/* =========================
+   PERFIL
+========================= */
 
 function saveProfile() {
+
   const name =
-    document.getElementById("profileName").value;
+    document
+      .getElementById("profileName")
+      .value
+      .trim();
 
-  localStorage.setItem("profileName", name);
 
-  document.getElementById("currentName").textContent =
-    name || "Sin nombre";
+  localStorage.setItem(
+    "profileName",
+    name
+  );
+
+
+  document
+    .getElementById("currentName")
+    .textContent =
+      name || "Sin nombre";
+
 }
+
 
 function loadProfile() {
+
   const name =
-    localStorage.getItem("profileName");
+    localStorage.getItem(
+      "profileName"
+    );
+
 
   if (name) {
-    document.getElementById("currentName").textContent =
-      name;
+
+    document
+      .getElementById("currentName")
+      .textContent = name;
+
   }
 
-  loadMyGames();
 }
+
+
+/* =========================
+   NOMBRE DE LA CONSOLA
+========================= */
 
 function saveOwner() {
+
   const name =
-    document.getElementById("consoleOwner").value;
+    document
+      .getElementById("consoleOwner")
+      .value
+      .trim();
 
-  localStorage.setItem("consoleOwner", name);
 
-  document.getElementById("consoleTitle").textContent =
-    "SoyPerritoProProYT-Console de " +
-    (name || "________");
+  localStorage.setItem(
+    "consoleOwner",
+    name
+  );
+
+
+  document
+    .getElementById("consoleTitle")
+    .textContent =
+      "SoyPerritoProProYT-Console de " +
+      (name || "________");
+
 }
 
+
 function loadOwner() {
+
   const name =
-    localStorage.getItem("consoleOwner");
+    localStorage.getItem(
+      "consoleOwner"
+    );
+
 
   if (name) {
-    document.getElementById("consoleTitle").textContent =
-      "SoyPerritoProProYT-Console de " + name;
+
+    document
+      .getElementById("consoleTitle")
+      .textContent =
+        "SoyPerritoProProYT-Console de " +
+        name;
+
   }
+
+}
+
+
+/* =========================
+   CUENTA DE PRUEBA
+========================= */
+
+function createAccount() {
+
+  const username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
+
+
+  const password =
+    document
+      .getElementById("password")
+      .value;
+
+
+  if (!username || !password) {
+
+    alert(
+      "Escribe un usuario y una contraseña."
+    );
+
+    return;
+  }
+
+
+  localStorage.setItem(
+    "accountUsername",
+    username
+  );
+
+
+  localStorage.setItem(
+    "accountPassword",
+    password
+  );
+
+
+  alert(
+    "Cuenta de prueba creada."
+  );
+
+}
+
+
+/* =========================
+   INICIAR SESIÓN
+========================= */
+
+function login() {
+
+  const username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
+
+
+  const password =
+    document
+      .getElementById("password")
+      .value;
+
+
+  const savedUsername =
+    localStorage.getItem(
+      "accountUsername"
+    );
+
+
+  const savedPassword =
+    localStorage.getItem(
+      "accountPassword"
+    );
+
+
+  if (
+    username === savedUsername &&
+    password === savedPassword
+  ) {
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+
+    document
+      .getElementById("accountStatus")
+      .textContent =
+        "✅ Sesión iniciada como " +
+        username;
+
+  } else {
+
+    alert(
+      "Usuario o contraseña incorrectos."
+    );
+
+  }
+
+}
+
+
+function loadAccount() {
+
+  const username =
+    localStorage.getItem(
+      "accountUsername"
+    );
+
+  const loggedIn =
+    localStorage.getItem(
+      "loggedIn"
+    );
+
+
+  if (username && loggedIn === "true") {
+
+    document
+      .getElementById("accountStatus")
+      .textContent =
+        "✅ Sesión iniciada como " +
+        username;
+
+  }
+
 }
 
 </script>
