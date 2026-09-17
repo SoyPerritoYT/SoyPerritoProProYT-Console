@@ -31,14 +31,16 @@
 <script>
 const inicio=document.getElementById('inicio'),consola=document.getElementById('consola'),estado=document.getElementById('estado'),panel=document.getElementById('ajustesPanel'),perfilMini=document.getElementById('perfilMini');
 function actualizarPerfil(){const n=localStorage.getItem('soyPerritoNombre');if(n)perfilMini.innerHTML='👤 Perfil: <strong>'+n.replace(/[<>]/g,'')+'</strong>';}
+function mostrarMenu(){inicio.style.display='none';consola.style.display='block';panel.style.display='none';estado.textContent='Selecciona una opción del menú.';actualizarPerfil();}
 actualizarPerfil();
-document.getElementById('encender').onclick=()=>{inicio.style.display='none';consola.style.display='block';estado.textContent='✅ Consola iniciada correctamente.';actualizarPerfil();};
+document.getElementById('encender').onclick=()=>{mostrarMenu();estado.textContent='✅ Consola iniciada correctamente.';};
 document.getElementById('shopBtn').onclick=()=>location.href='shop.html';
 document.getElementById('misJuegosBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
 document.getElementById('profilesBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
 document.getElementById('ajustesBtn').onclick=()=>{panel.style.display='block';estado.textContent='⚙️ Ajustes abiertos.';};
 document.getElementById('perfilAjustes').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
 document.getElementById('cerrarAjustes').onclick=()=>{panel.style.display='none';estado.textContent='Selecciona una opción del menú.';};
+if(new URLSearchParams(location.search).get('menu')==='1')mostrarMenu();
 </script>
 </body>
 </html>
