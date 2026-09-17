@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>🐶 SoyPerrito Adventure</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center;padding:20px}main{max-width:700px;margin:auto}h1{font-size:clamp(30px,8vw,55px)}.game{background:#181818;border:1px solid #444;border-radius:20px;padding:25px;margin-top:20px}.dog{font-size:90px;margin:15px}.stats{font-size:20px;margin:15px}.action{padding:16px 25px;border:0;border-radius:14px;background:#20d866;color:#fff;font-size:20px;font-weight:bold;cursor:pointer;margin:6px}.action:disabled{opacity:.6;cursor:not-allowed}.back{background:#333}.jugar{background:#ffb000;color:#111}.message{min-height:30px;color:#aaa;font-size:18px}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center;padding:20px;touch-action:manipulation}main{max-width:700px;margin:auto}h1{font-size:clamp(30px,8vw,55px)}.game{background:#181818;border:1px solid #444;border-radius:20px;padding:25px;margin-top:20px}.dog{font-size:90px;margin:15px}.stats{font-size:20px;margin:15px}.action{padding:16px 25px;border:0;border-radius:14px;background:#20d866;color:#fff;font-size:20px;font-weight:bold;cursor:pointer;margin:6px;min-height:52px}.action:disabled{opacity:.6;cursor:not-allowed}.back{background:#333}.jugar{background:#ffb000;color:#111}.message{min-height:30px;color:#aaa;font-size:18px}.controles{margin:22px auto 5px;max-width:360px}.controles h2{font-size:20px;margin:10px}.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:250px;margin:auto}.pad button{min-height:58px;border:1px solid #555;border-radius:14px;background:#252525;color:white;font-size:25px;font-weight:bold;touch-action:none}.pad button:active{transform:scale(.94);background:#333}.ayuda{color:#888;font-size:14px;margin-top:12px}
 </style>
 </head>
 <body>
@@ -13,20 +13,33 @@
 <h1>🐶 SoyPerrito Adventure</h1>
 <p>🎮 Juego oficial de SoyPerritoProProYT</p>
 <div class="game">
-<div class="dog">🐶</div>
+<div class="dog" id="dog">🐶</div>
 <div class="stats">⭐ Puntos: <span id="puntos">0</span> | 🪙 Monedas: <span id="monedas">0</span></div>
 <p class="message" id="mensaje">Pulsa JUGAR para comenzar.</p>
-<button class="action jugar" id="jugar">▶️ JUGAR</button>
-<button class="action" id="explorar" disabled>🌳 EXPLORAR</button>
-<button class="action back" onclick="location.href='../shop.html'">⬅️ SHOP</button>
+<button class="action jugar" id="jugar" type="button">▶️ JUGAR</button>
+<button class="action" id="explorar" type="button" disabled>🌳 EXPLORAR</button>
+<div class="controles">
+<h2>🎮 MANDO TÁCTIL</h2>
+<div class="pad">
+<span></span><button type="button" data-move="up" aria-label="Arriba">⬆️</button><span></span>
+<button type="button" data-move="left" aria-label="Izquierda">⬅️</button><button type="button" data-move="action" aria-label="Acción">⭐</button><button type="button" data-move="right" aria-label="Derecha">➡️</button>
+<span></span><button type="button" data-move="down" aria-label="Abajo">⬇️</button><span></span>
+</div>
+<p class="ayuda">Toca los botones para mover al perrito y explorar.</p>
+</div>
+<button class="action back" type="button" id="back">⬅️ VOLVER A MIS JUEGOS</button>
 </div>
 </main>
 <script>
-let puntos=0,monedas=0,jugando=false;
-const puntosEl=document.getElementById('puntos'),monedasEl=document.getElementById('monedas'),mensaje=document.getElementById('mensaje'),explorar=document.getElementById('explorar'),jugar=document.getElementById('jugar');
+let puntos=0,monedas=0,jugando=false,posX=0,posY=0;
+const puntosEl=document.getElementById('puntos'),monedasEl=document.getElementById('monedas'),mensaje=document.getElementById('mensaje'),explorar=document.getElementById('explorar'),jugar=document.getElementById('jugar'),dog=document.getElementById('dog');
 const eventos=['🐾 Encontraste una huella misteriosa.','🦴 ¡Encontraste un hueso!','⭐ ¡Descubriste una estrella!','🌳 Exploraste el bosque.','🎮 ¡Nueva aventura desbloqueada!'];
-jugar.addEventListener('click',()=>{jugando=true;puntos=0;monedas=0;puntosEl.textContent=puntos;monedasEl.textContent=monedas;explorar.disabled=false;jugar.textContent='🔄 REINICIAR';mensaje.textContent='🎮 ¡Partida iniciada! Pulsa EXPLORAR.';});
-explorar.addEventListener('click',()=>{if(!jugando)return;puntos+=10;monedas+=Math.floor(Math.random()*3)+1;puntosEl.textContent=puntos;monedasEl.textContent=monedas;mensaje.textContent=eventos[Math.floor(Math.random()*eventos.length)]+' +10 puntos';});
+function explorarJuego(){if(!jugando)return;puntos+=10;monedas+=Math.floor(Math.random()*3)+1;puntosEl.textContent=puntos;monedasEl.textContent=monedas;mensaje.textContent=eventos[Math.floor(Math.random()*eventos.length)]+' +10 puntos';}
+function mover(dir){if(!jugando){mensaje.textContent='▶️ Pulsa JUGAR primero.';return;}if(dir==='up')posY=Math.max(-3,posY-1);if(dir==='down')posY=Math.min(3,posY+1);if(dir==='left')posX=Math.max(-3,posX-1);if(dir==='right')posX=Math.min(3,posX+1);dog.style.transform='translate('+posX*18+'px,'+posY*12+'px)';mensaje.textContent='🐶 Te moviste '+({up:'arriba',down:'abajo',left:'a la izquierda',right:'a la derecha'}[dir])+'.';}
+jugar.addEventListener('click',()=>{jugando=true;puntos=0;monedas=0;posX=0;posY=0;dog.style.transform='translate(0,0)';puntosEl.textContent=puntos;monedasEl.textContent=monedas;explorar.disabled=false;jugar.textContent='🔄 REINICIAR';mensaje.textContent='🎮 ¡Partida iniciada! Usa el mando táctil.';});
+explorar.addEventListener('click',explorarJuego);
+document.querySelectorAll('[data-move]').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.move;if(d==='action')explorarJuego();else mover(d);}));
+document.getElementById('back').addEventListener('click',()=>{location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';});
 </script>
 </body>
 </html>
