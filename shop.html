@@ -5,44 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SoyPerritoProProYT-SHOP</title>
 <style>
-body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif;text-align:center;padding:30px}
-h1{font-size:clamp(30px,7vw,55px)}
-.shop{max-width:900px;margin:auto}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-top:30px}
-.card{background:#181818;border:1px solid #444;border-radius:18px;padding:25px}
-button{padding:14px 22px;border:0;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}
-.back{background:#333;color:white;margin-bottom:20px}
-.free{background:#20d866;color:white}
-#mensaje{margin-top:20px;color:#20d866;font-size:20px;font-weight:bold;min-height:28px}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif;text-align:center;padding:30px}.shop{max-width:900px;margin:auto}h1{font-size:clamp(30px,7vw,55px)}.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-top:30px}.card{background:#181818;border:1px solid #444;border-radius:18px;padding:25px}button{padding:14px 22px;border:0;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}.back{background:#333;color:white;margin-bottom:20px}.free{background:#20d866;color:white}#mensaje{margin-top:20px;color:#20d866;font-size:20px;font-weight:bold;min-height:28px}
 </style>
 </head>
 <body>
 <div class="shop">
-<button class="back" onclick="volverAlMenu()">⬅️ VOLVER AL MENÚ</button>
+<button class="back" onclick="location.replace('https://soyperritoyt.github.io/SoyPerritoProProYT-Console/?menu=1')">⬅️ VOLVER AL MENÚ</button>
 <h1>🛒 SoyPerritoProProYT-SHOP</h1>
 <p>🎮 Todos los juegos son GRATIS</p>
 <div id="mensaje"></div>
 <div class="games">
-<div class="card"><h2>🐶 SoyPerrito Adventure</h2><p>Juego oficial de SoyPerritoProProYT</p><button class="free" id="gratisBtn">🆓 GRATIS</button></div>
-<div class="card"><h2>🧱 SoyPerritoProProYT-Bed</h2><p>🌍 Mundo de bloques de SoyPerritoProProYT</p><p>👕 8 skins gratis</p><button class="free" id="bedBtn">🆓 GRATIS</button></div>
+<div class="card"><h2>🐶 SoyPerrito Adventure</h2><p>Juego oficial de SoyPerritoProProYT</p><button class="free" onclick="anadirAdventure()">🆓 GRATIS</button></div>
+<div class="card"><h2>🧱 SoyPerritoProProYT-Bed</h2><p>🌍 Mundo de bloques</p><p>👕 8 skins gratis</p><button class="free" onclick="anadirBed()">🆓 AÑADIR A MYGAMES</button></div>
 <div class="card"><h2>🎮 Próximamente</h2><p>Más juegos gratis próximamente...</p></div>
 </div>
 </div>
 <script>
-function volverAlMenu(){window.location.replace('https://soyperritoyt.github.io/SoyPerritoProProYT-Console/?menu=1');}
-const gratisBtn=document.getElementById('gratisBtn');
-const bedBtn=document.getElementById('bedBtn');
-const mensaje=document.getElementById('mensaje');
-gratisBtn.addEventListener('click',()=>{
-  mensaje.textContent='✅ Añadido a Mis juegos';gratisBtn.textContent='✅ AÑADIDO';gratisBtn.disabled=true;
-  setTimeout(()=>{location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/?add=soyperrito-adventure';},900);
-});
-bedBtn.addEventListener('click',()=>{
-  mensaje.textContent='✅ Añadido a Mis juegos';
-  bedBtn.textContent='✅ AÑADIDO';
-  bedBtn.disabled=true;
-  setTimeout(()=>{location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/?add=soyperritoproproyt-bed';},900);
-});
+function anadirAdventure(){location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/?add=soyperrito-adventure&v=4';}
+function anadirBed(){location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/?add=soyperritoproproyt-bed&v=4';}
 </script>
 </body>
 </html>
