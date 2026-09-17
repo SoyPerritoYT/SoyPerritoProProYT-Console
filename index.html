@@ -15,7 +15,7 @@
 <section class="menu">
 <button class="menu-btn" id="shopBtn">🛒 SHOP</button>
 <button class="menu-btn" id="misJuegosBtn">🎮 Mis juegos</button>
-<button class="menu-btn" id="profilesBtn">👤 Profiles</button>
+<button class="menu-btn" id="profilesBtn">👤 Perfil</button>
 <button class="menu-btn" id="ajustesBtn">⚙️ Ajustes</button>
 </section>
 <p id="estado">Selecciona una opción del menú.</p>
@@ -30,9 +30,9 @@
 </main>
 <script>
 const inicio=document.getElementById('inicio'),consola=document.getElementById('consola'),estado=document.getElementById('estado'),panel=document.getElementById('ajustesPanel'),perfilMini=document.getElementById('perfilMini');
-function actualizarPerfil(){const p=new URLSearchParams(location.search).get('profile');if(p){perfilMini.innerHTML='👤 Perfil: <strong>'+decodeURIComponent(p).replace(/[<>]/g,'')+'</strong>';localStorage.setItem('soyPerritoNombre',decodeURIComponent(p));return}const n=localStorage.getItem('soyPerritoNombre');if(n)perfilMini.innerHTML='👤 Perfil: <strong>'+n.replace(/[<>]/g,'')+'</strong>';}
+function actualizarPerfil(){const n=localStorage.getItem('soyPerritoNombre');if(n)perfilMini.innerHTML='👤 Perfil: <strong>'+n.replace(/[<>]/g,'')+'</strong>';}
 actualizarPerfil();
-document.getElementById('encender').onclick=()=>{inicio.style.display='none';consola.style.display='block';estado.textContent='✅ Consola iniciada correctamente.';};
+document.getElementById('encender').onclick=()=>{inicio.style.display='none';consola.style.display='block';estado.textContent='✅ Consola iniciada correctamente.';actualizarPerfil();};
 document.getElementById('shopBtn').onclick=()=>location.href='shop.html';
 document.getElementById('misJuegosBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
 document.getElementById('profilesBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
