@@ -1,71 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoyPerritoProProYT-Console</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: #080808; color: white; font-family: Arial, sans-serif; text-align: center; }
-    #inicio { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 25px; }
-    #inicio h1 { font-size: clamp(28px, 6vw, 52px); }
-    #consola { display: none; min-height: 100vh; padding: 25px; }
-    #menu { max-width: 900px; margin: 30px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-    button { padding: 18px 25px; font-size: 20px; font-weight: bold; border: 0; border-radius: 15px; cursor: pointer; }
-    #encender { background: #20d866; color: white; }
-    .menu-btn { background: #202020; color: white; border: 1px solid #444; }
-    .menu-btn:hover, #encender:hover { filter: brightness(1.2); }
-    #estado { margin-top: 25px; color: #aaa; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🐶 SoyPerritoProProYT-Console</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center}#inicio{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px;padding:20px}#inicio h1{font-size:clamp(28px,6vw,52px)}#consola{display:none;min-height:100vh;padding:25px}.top{max-width:900px;margin:auto}.perfil-mini{display:inline-block;background:#181818;border:1px solid #444;border-radius:15px;padding:10px 18px;margin:8px;color:#ddd}.perfil-mini strong{color:#20d866}.menu{max-width:900px;margin:30px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}button{padding:18px 25px;font-size:20px;font-weight:bold;border:0;border-radius:15px;cursor:pointer}.encender{background:#20d866;color:#fff}.menu-btn{background:#202020;color:#fff;border:1px solid #444}.menu-btn:hover,.encender:hover{filter:brightness(1.2)}#estado{margin-top:25px;color:#aaa}.panel{display:none;max-width:650px;margin:25px auto;background:#181818;border:1px solid #444;border-radius:20px;padding:25px}.panel button{margin:6px}.primary{background:#20d866;color:#fff}.secondary{background:#333;color:#fff}.danger{background:#7d2525;color:#fff}.info{color:#aaa}.version{margin-top:35px;color:#666;font-size:13px}
+</style>
 </head>
 <body>
-  <div id="inicio">
-    <h1>🐶 SoyPerritoProProYT-Console</h1>
-    <button id="encender" type="button">⚡ ENCENDER</button>
-  </div>
-  <main id="consola">
-    <h1>🎮 ¡Consola encendida!</h1>
-    <p>🐶 SoyPerritoProProYT-Console funciona.</p>
-    <section id="menu">
-      <button class="menu-btn" id="shopBtn" type="button">🛒 SHOP</button>
-      <button class="menu-btn" id="misJuegosBtn" type="button">🎮 Mis juegos</button>
-      <button class="menu-btn" id="profilesBtn" type="button">👤 Profiles</button>
-      <button class="menu-btn" type="button" data-name="Ajustes">⚙️ Ajustes</button>
-    </section>
-    <p id="estado">Selecciona una opción del menú.</p>
-  </main>
-  <script>
-    const inicio = document.getElementById('inicio');
-    const consola = document.getElementById('consola');
-    const encender = document.getElementById('encender');
-    const shopBtn = document.getElementById('shopBtn');
-    const misJuegosBtn = document.getElementById('misJuegosBtn');
-    const profilesBtn = document.getElementById('profilesBtn');
-    const estado = document.getElementById('estado');
-
-    encender.addEventListener('click', () => {
-      inicio.style.display = 'none';
-      consola.style.display = 'block';
-      estado.textContent = '✅ Consola iniciada correctamente.';
-    });
-
-    shopBtn.addEventListener('click', () => {
-      window.location.href = 'shop.html';
-    });
-
-    misJuegosBtn.addEventListener('click', () => {
-      window.location.href = 'https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
-    });
-
-    profilesBtn.addEventListener('click', () => {
-      window.location.href = 'https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
-    });
-
-    document.querySelectorAll('.menu-btn:not(#shopBtn):not(#misJuegosBtn):not(#profilesBtn)').forEach((boton) => {
-      boton.addEventListener('click', () => {
-        estado.textContent = 'Has seleccionado: ' + boton.dataset.name;
-      });
-    });
-  </script>
+<div id="inicio"><h1>🐶 SoyPerritoProProYT-Console</h1><button class="encender" id="encender">⚡ ENCENDER</button></div>
+<main id="consola">
+<div class="top"><h1>🎮 ¡Consola encendida!</h1><div class="perfil-mini" id="perfilMini">👤 Sin perfil</div></div>
+<section class="menu">
+<button class="menu-btn" id="shopBtn">🛒 SHOP</button>
+<button class="menu-btn" id="misJuegosBtn">🎮 Mis juegos</button>
+<button class="menu-btn" id="profilesBtn">👤 Profiles</button>
+<button class="menu-btn" id="ajustesBtn">⚙️ Ajustes</button>
+</section>
+<p id="estado">Selecciona una opción del menú.</p>
+<section class="panel" id="ajustesPanel">
+<h2>⚙️ Ajustes</h2>
+<p class="info">🐶 SoyPerritoProProYT-Console</p>
+<p class="info">Tu consola web oficial.</p>
+<button class="primary" id="perfilAjustes">👤 Gestionar perfil</button>
+<button class="secondary" id="cerrarAjustes">⬅️ Volver al menú</button>
+</section>
+<p class="version">SoyPerritoProProYT • Console</p>
+</main>
+<script>
+const inicio=document.getElementById('inicio'),consola=document.getElementById('consola'),estado=document.getElementById('estado'),panel=document.getElementById('ajustesPanel'),perfilMini=document.getElementById('perfilMini');
+function actualizarPerfil(){const p=new URLSearchParams(location.search).get('profile');if(p){perfilMini.innerHTML='👤 Perfil: <strong>'+decodeURIComponent(p).replace(/[<>]/g,'')+'</strong>';localStorage.setItem('soyPerritoNombre',decodeURIComponent(p));return}const n=localStorage.getItem('soyPerritoNombre');if(n)perfilMini.innerHTML='👤 Perfil: <strong>'+n.replace(/[<>]/g,'')+'</strong>';}
+actualizarPerfil();
+document.getElementById('encender').onclick=()=>{inicio.style.display='none';consola.style.display='block';estado.textContent='✅ Consola iniciada correctamente.';};
+document.getElementById('shopBtn').onclick=()=>location.href='shop.html';
+document.getElementById('misJuegosBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
+document.getElementById('profilesBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
+document.getElementById('ajustesBtn').onclick=()=>{panel.style.display='block';estado.textContent='⚙️ Ajustes abiertos.';};
+document.getElementById('perfilAjustes').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
+document.getElementById('cerrarAjustes').onclick=()=>{panel.style.display='none';estado.textContent='Selecciona una opción del menú.';};
+</script>
 </body>
 </html>
