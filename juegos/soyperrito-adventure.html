@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>🐶 SoyPerrito Adventure</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center;padding:20px}main{max-width:700px;margin:auto}h1{font-size:clamp(30px,8vw,55px)}.game{background:#181818;border:1px solid #444;border-radius:20px;padding:25px;margin-top:20px}.dog{font-size:90px;margin:15px}.stats{font-size:20px;margin:15px}.action{padding:16px 25px;border:0;border-radius:14px;background:#20d866;color:#fff;font-size:20px;font-weight:bold;cursor:pointer;margin:6px}.back{background:#333}.message{min-height:30px;color:#aaa;font-size:18px}</style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center;padding:20px}main{max-width:700px;margin:auto}h1{font-size:clamp(30px,8vw,55px)}.game{background:#181818;border:1px solid #444;border-radius:20px;padding:25px;margin-top:20px}.dog{font-size:90px;margin:15px}.stats{font-size:20px;margin:15px}.action{padding:16px 25px;border:0;border-radius:14px;background:#20d866;color:#fff;font-size:20px;font-weight:bold;cursor:pointer;margin:6px}.action:disabled{opacity:.6;cursor:not-allowed}.back{background:#333}.jugar{background:#ffb000;color:#111}.message{min-height:30px;color:#aaa;font-size:18px}
+</style>
 </head>
 <body>
 <main>
@@ -13,18 +14,19 @@
 <p>🎮 Juego oficial de SoyPerritoProProYT</p>
 <div class="game">
 <div class="dog">🐶</div>
-<div class="stats">⭐ Puntos: <span id="puntos">0</span></div>
-<p class="message" id="mensaje">¡Pulsa EXPLORAR para empezar!</p>
-<button class="action" id="explorar">🌳 EXPLORAR</button>
+<div class="stats">⭐ Puntos: <span id="puntos">0</span> | 🪙 Monedas: <span id="monedas">0</span></div>
+<p class="message" id="mensaje">Pulsa JUGAR para comenzar.</p>
+<button class="action jugar" id="jugar">▶️ JUGAR</button>
+<button class="action" id="explorar" disabled>🌳 EXPLORAR</button>
 <button class="action back" onclick="location.href='../shop.html'">⬅️ SHOP</button>
 </div>
 </main>
 <script>
-let puntos=0;
-const puntosEl=document.getElementById('puntos');
-const mensaje=document.getElementById('mensaje');
-const eventos=['🐾 Has encontrado una huella misteriosa.','🦴 ¡Encontraste un hueso!','⭐ ¡Has descubierto una estrella!','🌳 Has explorado el bosque.','🎮 ¡Nueva aventura desbloqueada!'];
-document.getElementById('explorar').addEventListener('click',()=>{puntos+=10;puntosEl.textContent=puntos;mensaje.textContent=eventos[Math.floor(Math.random()*eventos.length)]+' +10 puntos';});
+let puntos=0,monedas=0,jugando=false;
+const puntosEl=document.getElementById('puntos'),monedasEl=document.getElementById('monedas'),mensaje=document.getElementById('mensaje'),explorar=document.getElementById('explorar'),jugar=document.getElementById('jugar');
+const eventos=['🐾 Encontraste una huella misteriosa.','🦴 ¡Encontraste un hueso!','⭐ ¡Descubriste una estrella!','🌳 Exploraste el bosque.','🎮 ¡Nueva aventura desbloqueada!'];
+jugar.addEventListener('click',()=>{jugando=true;puntos=0;monedas=0;puntosEl.textContent=puntos;monedasEl.textContent=monedas;explorar.disabled=false;jugar.textContent='🔄 REINICIAR';mensaje.textContent='🎮 ¡Partida iniciada! Pulsa EXPLORAR.';});
+explorar.addEventListener('click',()=>{if(!jugando)return;puntos+=10;monedas+=Math.floor(Math.random()*3)+1;puntosEl.textContent=puntos;monedasEl.textContent=monedas;mensaje.textContent=eventos[Math.floor(Math.random()*eventos.length)]+' +10 puntos';});
 </script>
 </body>
 </html>
