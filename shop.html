@@ -13,6 +13,7 @@ h1{font-size:clamp(30px,7vw,55px)}
 button{padding:14px 22px;border:0;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}
 .back{background:#333;color:white;margin-bottom:20px}
 .free{background:#20d866;color:white}
+#mensaje{margin-top:20px;color:#20d866;font-size:20px;font-weight:bold;min-height:28px}
 </style>
 </head>
 <body>
@@ -20,10 +21,23 @@ button{padding:14px 22px;border:0;border-radius:12px;font-size:18px;font-weight:
 <button class="back" onclick="location.href='index.html'">⬅️ Volver a la consola</button>
 <h1>🛒 SoyPerritoProProYT-SHOP</h1>
 <p>🎮 Todos los juegos son GRATIS</p>
+<div id="mensaje"></div>
 <div class="games">
-<div class="card"><h2>🐶 SoyPerrito Adventure</h2><p>Juego oficial de SoyPerritoProProYT</p><button class="free" onclick="location.href='juegos/soyperrito-adventure.html'">🆓 GRATIS</button></div>
+<div class="card"><h2>🐶 SoyPerrito Adventure</h2><p>Juego oficial de SoyPerritoProProYT</p><button class="free" id="gratisBtn">🆓 GRATIS</button></div>
 <div class="card"><h2>🎮 Próximamente</h2><p>Más juegos gratis próximamente...</p></div>
 </div>
 </div>
+<script>
+const gratisBtn=document.getElementById('gratisBtn');
+const mensaje=document.getElementById('mensaje');
+gratisBtn.addEventListener('click',()=>{
+  mensaje.textContent='✅ Añadido a Mis juegos';
+  gratisBtn.textContent='✅ AÑADIDO';
+  gratisBtn.disabled=true;
+  setTimeout(()=>{
+    location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/?add=soyperrito-adventure';
+  },900);
+});
+</script>
 </body>
 </html>
