@@ -28,8 +28,8 @@
     <p>🐶 SoyPerritoProProYT-Console funciona.</p>
     <section id="menu">
       <button class="menu-btn" id="shopBtn" type="button">🛒 SHOP</button>
-      <button class="menu-btn" type="button" data-name="Mis juegos">🎮 Mis juegos</button>
-      <button class="menu-btn" type="button" data-name="Perfil">👤 Perfil</button>
+      <button class="menu-btn" id="misJuegosBtn" type="button">🎮 Mis juegos</button>
+      <button class="menu-btn" id="profilesBtn" type="button">👤 Profiles</button>
       <button class="menu-btn" type="button" data-name="Ajustes">⚙️ Ajustes</button>
     </section>
     <p id="estado">Selecciona una opción del menú.</p>
@@ -39,6 +39,8 @@
     const consola = document.getElementById('consola');
     const encender = document.getElementById('encender');
     const shopBtn = document.getElementById('shopBtn');
+    const misJuegosBtn = document.getElementById('misJuegosBtn');
+    const profilesBtn = document.getElementById('profilesBtn');
     const estado = document.getElementById('estado');
 
     encender.addEventListener('click', () => {
@@ -51,7 +53,15 @@
       window.location.href = 'shop.html';
     });
 
-    document.querySelectorAll('.menu-btn:not(#shopBtn)').forEach((boton) => {
+    misJuegosBtn.addEventListener('click', () => {
+      window.location.href = 'https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
+    });
+
+    profilesBtn.addEventListener('click', () => {
+      window.location.href = 'https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
+    });
+
+    document.querySelectorAll('.menu-btn:not(#shopBtn):not(#misJuegosBtn):not(#profilesBtn)').forEach((boton) => {
       boton.addEventListener('click', () => {
         estado.textContent = 'Has seleccionado: ' + boton.dataset.name;
       });
