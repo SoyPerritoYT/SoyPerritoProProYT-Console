@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🤖 Modo IA</title>
+<style>
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif;min-height:100vh;padding:20px;box-sizing:border-box}
+.app{max-width:650px;margin:auto}.box{background:#181818;border:1px solid #444;border-radius:20px;padding:20px}
+h1{text-align:center}.chat{height:55vh;min-height:280px;max-height:520px;overflow:auto;background:#0d0d0d;border-radius:15px;padding:12px;margin:15px 0}
+.msg{padding:10px 12px;border-radius:12px;margin:8px 0;white-space:pre-wrap}.user{background:#203a2a}.bot{background:#252525}
+form{display:flex;gap:8px}input{flex:1;min-width:0;padding:14px;border-radius:12px;border:1px solid #555;background:#111;color:#fff;font-size:16px}button{padding:14px 18px;border:0;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}.send{background:#20d866;color:#fff}.back{background:#333;color:#fff;margin-top:10px;width:100%}.info{text-align:center;color:#aaa;font-size:13px}
+</style>
+</head>
+<body>
+<div class="app"><div class="box">
+<h1>🤖 Modo IA</h1>
+<p class="info">Pequeña IA integrada en SoyPerritoProProYT-Console</p>
+<div class="chat" id="chat"><div class="msg bot">🐶 ¡Hola! ¿En qué te ayudo?</div></div>
+<form id="form"><input id="input" maxlength="1000" placeholder="Escribe aquí..." autocomplete="off"><button class="send">Enviar</button></form>
+<button class="back" id="back">⬅️ Volver a la consola</button>
+</div></div>
+<script>
+const chat=document.getElementById('chat'),input=document.getElementById('input');
+function msg(t,c){const d=document.createElement('div');d.className='msg '+c;d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+document.getElementById('form').onsubmit=async e=>{e.preventDefault();const t=input.value.trim();if(!t)return;msg(t,'user');input.value='';const load=msg('🤖 Pensando...','bot');try{const r=await fetch('https://soy-perrito-pro-pro-yt-vocabulario.vercel.app/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})});const d=await r.json();load.textContent=r.ok?(d.result||d.text||'🤖 Sin respuesta.'):'❌ No se pudo conectar con Gemini.'}catch(x){load.textContent='❌ Error de conexión.'}};
+document.getElementById('back').onclick=()=>location.href='./index.html?menu=1';
+</script>
+</body>
+</html>
