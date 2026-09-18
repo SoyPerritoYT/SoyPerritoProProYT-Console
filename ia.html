@@ -23,7 +23,18 @@ form{display:flex;gap:8px}input{flex:1;min-width:0;padding:14px;border-radius:12
 <script>
 const chat=document.getElementById('chat'),input=document.getElementById('input');
 function msg(t,c){const d=document.createElement('div');d.className='msg '+c;d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
-document.getElementById('form').onsubmit=async e=>{e.preventDefault();const t=input.value.trim();if(!t)return;msg(t,'user');input.value='';const load=msg('🤖 Pensando...','bot');try{const r=await fetch('https://soy-perrito-pro-pro-yt-vocabulario.vercel.app/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})});const d=await r.json();load.textContent=r.ok?(d.result||d.text||'🤖 Sin respuesta.'):'❌ No se pudo conectar con Gemini.'}catch(x){load.textContent='❌ Error de conexión.'}};
+document.getElementById('form').onsubmit=async e=>{
+ e.preventDefault();
+ const t=input.value.trim();
+ if(!t)return;
+ msg(t,'user'); input.value='';
+ const load=msg('🤖 Pensando...','bot');
+ try{
+  const r=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})});
+  const d=await r.json();
+  load.textContent=r.ok?(d.result||'🤖 Sin respuesta.'):'❌ '+(d.error||'No se pudo conectar con la IA.');
+ }catch(x){load.textContent='❌ Error de conexión con la IA.'}
+};
 document.getElementById('back').onclick=()=>location.href='./index.html?menu=1';
 </script>
 </body>
