@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>🐶 SoyPerritoProProYT-Console</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center}#inicio{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px;padding:20px}#inicio h1{font-size:clamp(28px,6vw,52px)}#consola{display:none;min-height:100vh;padding:25px}.top{max-width:900px;margin:auto}.perfil-mini{display:inline-block;background:#181818;border:1px solid #444;border-radius:15px;padding:10px 18px;margin:8px;color:#ddd}.perfil-mini strong{color:#20d866}.menu{max-width:900px;margin:30px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}button{padding:18px 25px;font-size:20px;font-weight:bold;border:0;border-radius:15px;cursor:pointer}.encender{background:#20d866;color:#fff}.menu-btn{background:#202020;color:#fff;border:1px solid #444}.menu-btn:hover,.encender:hover{filter:brightness(1.2)}#estado{margin-top:25px;color:#aaa}.panel{display:none;max-width:650px;margin:25px auto;background:#181818;border:1px solid #444;border-radius:20px;padding:25px}.panel button{margin:6px}.primary{background:#20d866;color:#fff}.secondary{background:#333;color:#fff}.danger{background:#7d2525;color:#fff}.ai{background:#202020;color:#fff;border:1px solid #20d866}.info{color:#aaa}.version{margin-top:35px;color:#666;font-size:13px}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;text-align:center}#inicio{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px;padding:20px}#inicio h1{font-size:clamp(28px,6vw,52px)}#consola{display:none;min-height:100vh;padding:25px}.top{max-width:900px;margin:auto}.perfil-mini{display:inline-block;background:#181818;border:1px solid #444;border-radius:15px;padding:10px 18px;margin:8px;color:#ddd}.perfil-mini strong{color:#20d866}.menu{max-width:900px;margin:30px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}button{padding:18px 25px;font-size:20px;font-weight:bold;border:0;border-radius:15px;cursor:pointer}.encender{background:#20d866;color:#fff}.menu-btn{background:#202020;color:#fff;border:1px solid #444}.menu-btn:hover,.encender:hover{filter:brightness(1.2)}#estado{margin-top:25px;color:#aaa}.panel{display:none;max-width:650px;margin:25px auto;background:#181818;border:1px solid #444;border-radius:20px;padding:25px}.panel button{margin:6px}.primary{background:#20d866;color:#fff}.secondary{background:#333;color:#fff}.ai{background:#202020;color:#fff;border:1px solid #20d866}.info{color:#aaa}.version{margin-top:35px;color:#666;font-size:13px}
+#iaPanel{max-width:700px}.chat{height:320px;overflow:auto;text-align:left;background:#0f0f0f;border:1px solid #333;border-radius:15px;padding:15px;margin:15px 0}.msg{padding:10px 12px;margin:8px 0;border-radius:12px;white-space:pre-wrap}.user{background:#203a2a}.bot{background:#252525}.ia-form{display:flex;gap:8px}.ia-form input{flex:1;min-width:0;padding:15px;border-radius:12px;border:1px solid #555;background:#111;color:#fff;font-size:16px}.ia-form button{padding:15px}
 </style>
 </head>
 <body>
@@ -20,6 +21,16 @@
 <button class="menu-btn" id="ajustesBtn">⚙️ Ajustes</button>
 </section>
 <p id="estado">Selecciona una opción del menú.</p>
+<section class="panel" id="iaPanel">
+<h2>🤖 Modo IA — Gemini</h2>
+<p class="info">Habla con la IA de tu consola.</p>
+<div class="chat" id="chat" aria-live="polite"><div class="msg bot">🐶 ¡Hola! Soy la IA de tu consola. ¿En qué te ayudo?</div></div>
+<form class="ia-form" id="iaForm">
+<input id="iaInput" type="text" maxlength="1000" placeholder="Escribe un mensaje..." autocomplete="off">
+<button class="primary" type="submit">Enviar</button>
+</form>
+<button class="secondary" id="cerrarIA">⬅️ Volver</button>
+</section>
 <section class="panel" id="ajustesPanel">
 <h2>⚙️ Ajustes</h2>
 <p class="info">🐶 SoyPerritoProProYT-Console</p>
@@ -30,18 +41,21 @@
 <p class="version">SoyPerritoProProYT • Console</p>
 </main>
 <script>
-const inicio=document.getElementById('inicio'),consola=document.getElementById('consola'),estado=document.getElementById('estado'),panel=document.getElementById('ajustesPanel'),perfilMini=document.getElementById('perfilMini');
+const inicio=document.getElementById('inicio'),consola=document.getElementById('consola'),estado=document.getElementById('estado'),panel=document.getElementById('ajustesPanel'),iaPanel=document.getElementById('iaPanel'),perfilMini=document.getElementById('perfilMini'),chat=document.getElementById('chat'),iaInput=document.getElementById('iaInput');
 function actualizarPerfil(){const n=localStorage.getItem('soyPerritoNombre');if(n)perfilMini.innerHTML='👤 Perfil: <strong>'+n.replace(/[<>]/g,'')+'</strong>';}
-function mostrarMenu(){inicio.style.display='none';consola.style.display='block';panel.style.display='none';estado.textContent='Selecciona una opción del menú.';actualizarPerfil();}
+function mostrarMenu(){inicio.style.display='none';consola.style.display='block';panel.style.display='none';iaPanel.style.display='none';estado.textContent='Selecciona una opción del menú.';actualizarPerfil();}
 actualizarPerfil();
 document.getElementById('encender').onclick=()=>{mostrarMenu();estado.textContent='✅ Consola iniciada correctamente.';};
 document.getElementById('shopBtn').onclick=()=>location.href='shop.html';
 document.getElementById('misJuegosBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-MyGames/';
-document.getElementById('iaBtn').onclick=()=>{estado.textContent='🤖 Abriendo Modo IA con ChatGPT...';location.href='https://chatgpt.com/';};
+document.getElementById('iaBtn').onclick=()=>{panel.style.display='none';iaPanel.style.display='block';estado.textContent='🤖 Modo IA Gemini abierto.';iaInput.focus();};
 document.getElementById('profilesBtn').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
-document.getElementById('ajustesBtn').onclick=()=>{panel.style.display='block';estado.textContent='⚙️ Ajustes abiertos.';};
+document.getElementById('ajustesBtn').onclick=()=>{iaPanel.style.display='none';panel.style.display='block';estado.textContent='⚙️ Ajustes abiertos.';};
 document.getElementById('perfilAjustes').onclick=()=>location.href='https://soyperritoyt.github.io/SoyPerritoProProYT-Console-Profiles/';
 document.getElementById('cerrarAjustes').onclick=()=>{panel.style.display='none';estado.textContent='Selecciona una opción del menú.';};
+document.getElementById('cerrarIA').onclick=()=>{iaPanel.style.display='none';estado.textContent='Selecciona una opción del menú.';};
+function addMsg(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;}
+document.getElementById('iaForm').onsubmit=async(e)=>{e.preventDefault();const text=iaInput.value.trim();if(!text)return;addMsg(text,'user');iaInput.value='';const loading=addMsg('🤖 Pensando...','bot');try{const r=await fetch('https://soy-perrito-pro-pro-yt-vocabulario.vercel.app/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});const d=await r.json();loading.textContent=r.ok?(d.result||d.text||'🤖 Sin respuesta.'):'❌ No se pudo conectar con Gemini.';}catch(err){loading.textContent='❌ Error de conexión con la IA.';}chat.scrollTop=chat.scrollHeight;};
 if(new URLSearchParams(location.search).get('menu')==='1')mostrarMenu();
 </script>
 </body>
